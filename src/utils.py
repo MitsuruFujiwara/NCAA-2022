@@ -26,6 +26,18 @@ FEATS_EXCLUDED = []
 COMPETITION_NAME_M = 'mens-march-mania-2022'
 COMPETITION_NAME_W = 'womens-march-mania-2022'
 
+# dict for location
+DICT_LOC = {'H':1, 'A':-1, 'N':0}
+
+# dict for seed
+DICT_SEED = {'a':0, 'b':1}
+
+# save pkl
+def save2pkl(path, df):
+    f = open(path, 'wb')
+    pickle.dump(df, f)
+    f.close
+
 # to feather
 def to_feature(df, path):
     if df.columns.duplicated().sum()>0:
