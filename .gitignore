@@ -3,5 +3,6 @@
 /src/.ipynb_checkpoints/
 /src/__pycache__/
 /feats/*.feather
+/feats/*.pkl
 *.xlsx
 *.ipynb
