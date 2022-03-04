@@ -14,7 +14,8 @@ def main():
     # load csv
     MasseyOrdinals = pd.read_csv('../input/mens/MDataFiles_Stage1/MMasseyOrdinals.csv')
 
-    # TODO
+    # aggregate
+    MasseyOrdinals = MasseyOrdinals.groupby(['Season', 'RankingDayNum','TeamID']).mean().reset_index()
 
     # save pkl
     save2pkl('../feats/massey_ordinals_mens.pkl', MasseyOrdinals)
