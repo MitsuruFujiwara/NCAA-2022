@@ -13,7 +13,6 @@ from utils import DICT_LOC
 def main():
 
     # load csv
-    Teams = pd.read_csv('../input/mens/MDataFiles_Stage1/MTeams.csv')
     TourneyCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MNCAATourneyCompactResults.csv')
     RegularSeasonCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MRegularSeasonCompactResults.csv')
     SecondaryTourneyCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MSecondaryTourneyCompactResults.csv')
