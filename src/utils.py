@@ -38,6 +38,12 @@ def save2pkl(path, df):
     pickle.dump(df, f)
     f.close
 
+# load pkl
+def loadpkl(path):
+    f = open(path, 'rb')
+    out = pickle.load(f)
+    return out
+
 # to feather
 def to_feature(df, path):
     if df.columns.duplicated().sum()>0:
