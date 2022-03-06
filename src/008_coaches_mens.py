@@ -15,7 +15,7 @@ def main():
     TeamCoaches = pd.read_csv('../input/mens/MDataFiles_Stage1/MTeamCoaches.csv')
 
     # add days coaches
-    TeamCoaches['days_coaches'] = TeamCoaches['LastDayNum'] - TeamCoaches['	FirstDayNum']
+    TeamCoaches['days_coaches'] = TeamCoaches['LastDayNum'] - TeamCoaches['FirstDayNum']
 
     # drop unnecessary columns
     TeamCoaches.drop(['FirstDayNum','LastDayNum','CoachName'],axis=1,inplace=True)
