@@ -2,18 +2,16 @@
 import feather
 import gc
 import json
+import matplotlib.pyplot as plt
 import os
 import pandas as pd
 import numpy as np
-import requests
 import pickle
+import requests
+import seaborn as sns
 
-from glob import glob
-from multiprocessing import Pool, cpu_count
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import KFold
-from time import time, sleep
-from tqdm import tqdm
+from time import sleep
 
 #==============================================================================
 # utils
@@ -21,7 +19,7 @@ from tqdm import tqdm
 
 NUM_FOLDS = 5
 
-FEATS_EXCLUDED = ['WTeamID','LTeamID','target','ID','is_test']
+FEATS_EXCLUDED = ['WTeamID','LTeamID','target','ID','is_test','index']
 
 COMPETITION_NAME_M = 'mens-march-mania-2022'
 COMPETITION_NAME_W = 'womens-march-mania-2022'
@@ -97,3 +95,26 @@ def submit(file_path, is_men=True, comment='from API'):
 def to_json(data_dict, path):
     with open(path, 'w') as f:
         json.dump(data_dict, f, indent=4)
+
+# plot scatter
+def plot_scatter(y_true, y_pred, outputpath):
+    plt.figure()
+    plt.scatter(x=y_pred, y=y_true, s=10, alpha=0.3)
+    plt.xlabel('y_pred')
+    plt.ylabel('y_true')
+    plt.savefig(outputpath)
+
+# Display/plot feature importance
+def save_imp(imp_df, path_png, path_csv):
+    cols = imp_df[['feature', 'importance']].groupby('feature').mean().sort_values(by='importance', ascending=False)[:40].index
+    best_features = imp_df.loc[imp_df.feature.isin(cols)]
+
+    # for checking all importance
+    imp_df_agg = imp_df.groupby('feature').sum()
+    imp_df_agg.to_csv(path_csv)
+
+    plt.figure(figsize=(8, 10))
+    sns.barplot(x='importance', y='feature', data=best_features.sort_values(by='importance', ascending=False))
+    plt.title('LightGBM Features (avg over folds)')
+    plt.tight_layout()
+    plt.savefig(path_png)
