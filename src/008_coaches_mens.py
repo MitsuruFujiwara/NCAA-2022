@@ -18,8 +18,11 @@ def main():
     # add days coaches
     TeamCoaches['days_coaches'] = TeamCoaches['LastDayNum'] - TeamCoaches['FirstDayNum']
 
+    # aggregate
+    TeamCoaches = TeamCoaches.groupby(['Season','TeamID']).mean().reset_index()
+
     # drop unnecessary columns
-    TeamCoaches.drop(['FirstDayNum','LastDayNum','CoachName'],axis=1,inplace=True)
+    TeamCoaches.drop(['FirstDayNum','LastDayNum'],axis=1,inplace=True)
 
     # save pkl
     save2pkl('../feats/coaches_mens.pkl', TeamCoaches)
