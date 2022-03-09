@@ -21,6 +21,9 @@ def main():
     # drop team name
     Teams.drop('TeamName',axis=1,inplace=True)
 
+    # rename columns
+    Teams.columns = ['TeamID', 'Teams_FirstD1Season', 'Teams_LastD1Season', 'Teams_diff_D1Season']
+
     # save pkl
     save2pkl('../feats/teams_mens.pkl', Teams)
 
