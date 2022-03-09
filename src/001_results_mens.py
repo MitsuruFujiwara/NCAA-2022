@@ -46,9 +46,9 @@ def main():
     df['ID'] = df['Season'].astype(str) +'_'+ df['WTeamID'].astype(str) +'_'+ df['LTeamID'].astype(str)
 
     # split ID
-    SampleSubmission['Season'] = SampleSubmission['ID'].apply(lambda x: x[:4])
-    SampleSubmission['WTeamID'] = SampleSubmission['ID'].apply(lambda x: x[5:9])
-    SampleSubmission['LTeamID'] = SampleSubmission['ID'].apply(lambda x: x[10:14])
+    SampleSubmission['Season'] = SampleSubmission['ID'].apply(lambda x: x[:4]).astype(int)
+    SampleSubmission['WTeamID'] = SampleSubmission['ID'].apply(lambda x: x[5:9]).astype(int)
+    SampleSubmission['LTeamID'] = SampleSubmission['ID'].apply(lambda x: x[10:14]).astype(int)
 
     # add DayNum
     SampleSubmission = SampleSubmission.merge(df[['ID','DayNum']],on='ID',how='left')
