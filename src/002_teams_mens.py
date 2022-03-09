@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
+from utils import BASE_DIR
 
 #==============================================================================
 # preprocess teams mens
@@ -12,7 +13,7 @@ from utils import save2pkl, line_notify
 def main():
 
     # load csv
-    Teams = pd.read_csv('../input/mens/MDataFiles_Stage1/MTeams.csv')
+    Teams = pd.read_csv(f'{BASE_DIR}/MTeams.csv')
 
     # add features
     Teams['diff_D1Season'] = Teams['LastD1Season'] - Teams['FirstD1Season']

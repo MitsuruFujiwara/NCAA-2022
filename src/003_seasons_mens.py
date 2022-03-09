@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
+from utils import BASE_DIR
 
 #==============================================================================
 # preprocess seasons mens
@@ -12,7 +13,7 @@ from utils import save2pkl, line_notify
 def main():
 
     # load csv
-    Seasons = pd.read_csv('../input/mens/MDataFiles_Stage1/MSeasons.csv')
+    Seasons = pd.read_csv(f'{BASE_DIR}/MSeasons.csv')
 
     # drop team name
     Seasons.drop('DayZero',axis=1,inplace=True)

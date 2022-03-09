@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
+from utils import BASE_DIR
 
 #==============================================================================
 # preprocess game cities mens
@@ -12,7 +13,7 @@ from utils import save2pkl, line_notify
 def main():
 
     # load csv
-    GameCities = pd.read_csv('../input/mens/MDataFiles_Stage1/MGameCities.csv')
+    GameCities = pd.read_csv(f'{BASE_DIR}/MGameCities.csv')
 
     # label encoding
     GameCities['CRType'] = GameCities['CRType'].map(GameCities['CRType'].value_counts())

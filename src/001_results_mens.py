@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
-from utils import DICT_LOC
+from utils import BASE_DIR, DICT_LOC
 
 #==============================================================================
 # preprocess results mens
@@ -13,9 +13,10 @@ from utils import DICT_LOC
 def main():
 
     # load csv
-    TourneyCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MNCAATourneyCompactResults.csv')
-    RegularSeasonCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MRegularSeasonCompactResults.csv')
-    SecondaryTourneyCompactResults = pd.read_csv('../input/mens/MDataFiles_Stage1/MSecondaryTourneyCompactResults.csv')
+    TourneyCompactResults = pd.read_csv(f'{BASE_DIR}/MNCAATourneyCompactResults.csv')
+    RegularSeasonCompactResults = pd.read_csv(f'{BASE_DIR}/MRegularSeasonCompactResults.csv')
+    SecondaryTourneyCompactResults = pd.read_csv(f'{BASE_DIR}/MSecondaryTourneyCompactResults.csv')
+    MSampleSubmissionStage1 = pd.read_csv(f'{BASE_DIR}/MSampleSubmissionStage1.csv')
 
     # drop unnecessary columns
     SecondaryTourneyCompactResults.drop('SecondaryTourney',axis=1,inplace=True)

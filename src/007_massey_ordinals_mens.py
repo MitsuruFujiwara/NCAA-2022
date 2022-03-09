@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
+from utils import BASE_DIR
 
 #==============================================================================
 # preprocess massaey ordinals mens
@@ -12,7 +13,7 @@ from utils import save2pkl, line_notify
 def main():
 
     # load csv
-    MasseyOrdinals = pd.read_csv('../input/mens/MDataFiles_Stage1/MMasseyOrdinals.csv')
+    MasseyOrdinals = pd.read_csv(f'{BASE_DIR}/MMasseyOrdinals.csv')
 
     # aggregate
     MasseyOrdinals = MasseyOrdinals.groupby(['Season', 'RankingDayNum','TeamID']).mean().reset_index()

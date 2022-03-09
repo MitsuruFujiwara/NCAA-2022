@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
+from utils import BASE_DIR
 
 #==============================================================================
 # preprocess coaches mens
@@ -12,7 +13,7 @@ from utils import save2pkl, line_notify
 def main():
 
     # load csv
-    TeamCoaches = pd.read_csv('../input/mens/MDataFiles_Stage1/MTeamCoaches.csv')
+    TeamCoaches = pd.read_csv(f'{BASE_DIR}/MTeamCoaches.csv')
 
     # add days coaches
     TeamCoaches['days_coaches'] = TeamCoaches['LastDayNum'] - TeamCoaches['FirstDayNum']
