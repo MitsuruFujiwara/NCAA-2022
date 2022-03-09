@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
-from utils import BASE_DIR, DICT_SEED
+from utils import BASE_DIR, DICT_SEED, DICT_REGION
 
 #==============================================================================
 # preprocess seeds mens
@@ -16,7 +16,7 @@ def main():
     TourneySeeds = pd.read_csv(f'{BASE_DIR}/MNCAATourneySeeds.csv')
 
     # split seeds
-    TourneySeeds['region'] = TourneySeeds['Seed'].apply(lambda x: x[0])
+    TourneySeeds['region'] = TourneySeeds['Seed'].apply(lambda x: x[0]).map(DICT_REGION)
     TourneySeeds['seed_in_region'] = TourneySeeds['Seed'].apply(lambda x: x[1:3]).astype(int)
     TourneySeeds['seed_in_region2'] = TourneySeeds['Seed'].apply(lambda x: x[-1]).map(DICT_SEED)
 
