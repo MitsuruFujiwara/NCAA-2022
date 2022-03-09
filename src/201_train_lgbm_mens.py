@@ -7,12 +7,11 @@ import pandas as pd
 import sys
 import warnings
 
-from datetime import datetime
 from glob import glob
 from sklearn.model_selection import GroupKFold
 from tqdm import tqdm
 
-from utils import line_notify, rmse, save2pkl, save_imp, plot_scatter
+from utils import line_notify, rmse, save_imp, plot_scatter
 from utils import NUM_FOLDS, FEATS_EXCLUDED
 
 #==============================================================================
@@ -51,8 +50,6 @@ params['verbose'] = -1
 params['seed'] = 47
 params['bagging_seed'] = 47
 params['drop_seed'] = 47
-
-mmdd = datetime.today().replace(day=1).strftime('%Y-%m-%d')
 
 def main():
     # load feathers
@@ -138,6 +135,9 @@ def main():
     # save prediction
     train_df.loc[:,'Pred'] = oof_preds
     test_df.loc[:,'Pred'] = sub_preds
+
+    # to probablity
+    test_df.loc[:,'Pred'] = (test_df['Pred']-test_df['Pred'].min())/(test_df['Pred'].max()-test_df['Pred'].min())
 
     # save csv
     train_df[['ID','target','Pred']].to_csv(oof_path, index=False)

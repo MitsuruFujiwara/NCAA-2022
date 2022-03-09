@@ -84,6 +84,17 @@ def main():
     # merge conferences tourney games
     df = df.merge(ConferenceTourneyGames,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
 
+    # add diff features
+    df['diff_ConfAbbrev'] = df['ConfAbbrev_W']-df['ConfAbbrev_L']
+    df['diff_days_coaches'] = df['days_coaches_W']-df['days_coaches_L']
+    df['diff_OrdinalRank'] = df['OrdinalRank_W']-df['OrdinalRank_L']
+    df['diff_region'] = df['region_W']-df['region_L']
+    df['diff_seed_in_region'] = df['seed_in_region_W']-df['seed_in_region_L']
+    df['diff_seed_in_region2'] = df['seed_in_region2_W']-df['seed_in_region2_L']
+    df['diff_Teams_FirstD1Season'] = df['Teams_FirstD1Season_W']-df['Teams_FirstD1Season_L']
+    df['diff_Teams_LastD1Season'] = df['Teams_LastD1Season_W']-df['Teams_LastD1Season_L']
+    df['diff_Teams_diff_D1Season'] = df['Teams_diff_D1Season_W']-df['Teams_diff_D1Season_L']
+
     # save as feather
     to_feature(df, '../feats/f101')
 

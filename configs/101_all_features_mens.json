@@ -32,6 +32,15 @@
         "days_coaches_L",
         "ConfAbbrev_W",
         "ConfAbbrev_L",
-        "ConfAbbrev"
+        "ConfAbbrev",
+        "diff_ConfAbbrev",
+        "diff_days_coaches",
+        "diff_OrdinalRank",
+        "diff_region",
+        "diff_seed_in_region",
+        "diff_seed_in_region2",
+        "diff_Teams_FirstD1Season",
+        "diff_Teams_LastD1Season",
+        "diff_Teams_diff_D1Season"
     ]
 }
