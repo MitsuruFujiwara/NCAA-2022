@@ -21,7 +21,7 @@ from tqdm import tqdm
 
 NUM_FOLDS = 5
 
-FEATS_EXCLUDED = []
+FEATS_EXCLUDED = ['WTeamID','LTeamID','target','ID','is_test']
 
 COMPETITION_NAME_M = 'mens-march-mania-2022'
 COMPETITION_NAME_W = 'womens-march-mania-2022'
@@ -34,6 +34,9 @@ DICT_LOC = {'H':1, 'A':-1, 'N':0}
 
 # dict for seed
 DICT_SEED = {'a':0, 'b':1}
+
+# dict for region
+DICT_REGION = {'W':0, 'Y':1, 'X':2, 'Z':3}
 
 # save pkl
 def save2pkl(path, df):

@@ -14,3 +14,5 @@ python 007_massey_ordinals_mens.py
 python 008_coaches_mens.py
 python 009_conferences_mens.py
 python 010_conference_games_mens.py
+
+python 101_aggregate_mens.py
