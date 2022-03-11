@@ -6,7 +6,7 @@ import sys
 from utils import loadpkl, to_feature, to_json, line_notify
 
 #==============================================================================
-# preprocess results mens
+# aggregate mens
 #==============================================================================
 
 def main():

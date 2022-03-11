@@ -13,6 +13,6 @@ python 006_massey_ordinals_mens.py
 python 007_coaches_mens.py
 python 008_conferences_mens.py
 
-python 101_aggregate_mens.py
+#python 101_aggregate_mens.py
 
-python 201_train_lgbm_mens.py
+#python 201_train_lgbm_mens.py
