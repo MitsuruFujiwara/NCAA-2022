@@ -12,16 +12,30 @@ from utils import loadpkl, to_feature, to_json, line_notify
 def main():
 
     # load pkls
-    df = loadpkl('../feats/result_mens.pkl')
+    df = loadpkl('../feats/tourney_result_mens.pkl')
+    df_season = loadpkl('../feats/season_result_mens.pkl')
     Teams = loadpkl('../feats/teams_mens.pkl')
     Seasons = loadpkl('../feats/seasons_mens.pkl')
     TourneySeeds = loadpkl('../feats/seeds_mens.pkl')
-    Cities = loadpkl('../feats/cities_mens.pkl')
-    GameCities = loadpkl('../feats/game_cities_mens.pkl')
+#    Cities = loadpkl('../feats/cities_mens.pkl')
+#    GameCities = loadpkl('../feats/game_cities_mens.pkl')
     MasseyOrdinals = loadpkl('../feats/massey_ordinals_mens.pkl')
     TeamCoaches = loadpkl('../feats/coaches_mens.pkl')
     Conferences = loadpkl('../feats/conferences_mens.pkl')
-    ConferenceTourneyGames = loadpkl('../feats/conference_game_mens.pkl')
+#    ConferenceTourneyGames = loadpkl('../feats/conference_game_mens.pkl')
+
+    # drop results before 2003
+    df = df[df['Season']>=2003]
+
+    # merge season result
+    df_season_w = df_season.copy()
+    df_season_l = df_season.copy()
+
+    df_season_w.columns = ['Season']+[f'W{c}' for c in df_season.columns if c not in ['Season']]
+    df_season_l.columns = ['Season']+[f'L{c}' for c in df_season.columns if c not in ['Season']]
+
+    df = df.merge(df_season_w,on=['Season','WTeamID'],how='left')
+    df = df.merge(df_season_l,on=['Season','LTeamID'],how='left')
 
     # merge teams
     Teams_w = Teams.copy()
@@ -47,19 +61,19 @@ def main():
     df = df.merge(TourneySeeds_l,on=['Season', 'LTeamID'],how='left')
 
     # merge game cities
-    GameCities = GameCities.merge(Cities,on='CityID',how='left').drop('CityID',axis=1)
+#    GameCities = GameCities.merge(Cities,on='CityID',how='left').drop('CityID',axis=1)
 
-    df = df.merge(GameCities,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
+#    df = df.merge(GameCities,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
 
     # merge massey ordinals
     MasseyOrdinals_w = MasseyOrdinals.copy()
     MasseyOrdinals_l = MasseyOrdinals.copy()
 
-    MasseyOrdinals_w.columns = ['Season', 'DayNum', 'WTeamID', 'OrdinalRank_W']
-    MasseyOrdinals_l.columns = ['Season', 'DayNum', 'LTeamID', 'OrdinalRank_L']
+    MasseyOrdinals_w.columns = ['Season']+[f'W{c}' for c in MasseyOrdinals.columns if c not in ['Season']]
+    MasseyOrdinals_l.columns = ['Season']+[f'L{c}' for c in MasseyOrdinals.columns if c not in ['Season']]
 
-    df = df.merge(MasseyOrdinals_w,on=['Season','DayNum','WTeamID'],how='left')
-    df = df.merge(MasseyOrdinals_l,on=['Season','DayNum','LTeamID'],how='left')
+    df = df.merge(MasseyOrdinals_w,on=['Season','WTeamID'],how='left')
+    df = df.merge(MasseyOrdinals_l,on=['Season','LTeamID'],how='left')
 
     # merge team coaches
     TeamCoaches_w = TeamCoaches.copy()
@@ -82,12 +96,14 @@ def main():
     df = df.merge(Conferences_l,on=['Season','LTeamID'],how='left')
 
     # merge conferences tourney games
-    df = df.merge(ConferenceTourneyGames,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
+#    df = df.merge(ConferenceTourneyGames,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
 
     # add diff features
     df['diff_ConfAbbrev'] = df['ConfAbbrev_W']-df['ConfAbbrev_L']
     df['diff_days_coaches'] = df['days_coaches_W']-df['days_coaches_L']
-    df['diff_OrdinalRank'] = df['OrdinalRank_W']-df['OrdinalRank_L']
+    df['diff_OrdinalRank_mean'] = df['WOrdinalRank_mean']-df['LOrdinalRank_mean']
+    df['diff_OrdinalRank_max'] = df['WOrdinalRank_max']-df['LOrdinalRank_max']
+    df['diff_OrdinalRank_min'] = df['WOrdinalRank_min']-df['LOrdinalRank_min']
     df['diff_region'] = df['region_W']-df['region_L']
     df['diff_seed_in_region'] = df['seed_in_region_W']-df['seed_in_region_L']
     df['diff_seed_in_region2'] = df['seed_in_region2_W']-df['seed_in_region2_L']
