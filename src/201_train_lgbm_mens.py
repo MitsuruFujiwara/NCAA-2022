@@ -12,7 +12,7 @@ from sklearn.model_selection import GroupKFold
 from sklearn.metrics import log_loss
 from tqdm import tqdm
 
-from utils import line_notify, save_imp, plot_scatter
+from utils import line_notify, save_imp
 from utils import NUM_FOLDS, FEATS_EXCLUDED
 
 #==============================================================================
@@ -143,9 +143,6 @@ def main():
     # save csv
     train_df[['ID','target','Pred']].to_csv(oof_path, index=False)
     test_df[['ID','Pred']].to_csv(sub_path, index=False)
-
-    # save scatter
-    plot_scatter(train_df['target'],train_df['Pred'],scatter_path)
 
     # LINE notify
     line_notify(f'{sys.argv[0]} done.')

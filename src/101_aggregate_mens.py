@@ -17,12 +17,9 @@ def main():
     Teams = loadpkl('../feats/teams_mens.pkl')
     Seasons = loadpkl('../feats/seasons_mens.pkl')
     TourneySeeds = loadpkl('../feats/seeds_mens.pkl')
-#    Cities = loadpkl('../feats/cities_mens.pkl')
-#    GameCities = loadpkl('../feats/game_cities_mens.pkl')
     MasseyOrdinals = loadpkl('../feats/massey_ordinals_mens.pkl')
     TeamCoaches = loadpkl('../feats/coaches_mens.pkl')
     Conferences = loadpkl('../feats/conferences_mens.pkl')
-#    ConferenceTourneyGames = loadpkl('../feats/conference_game_mens.pkl')
 
     # drop results before 2003
     df = df[df['Season']>=2003]
@@ -41,8 +38,8 @@ def main():
     Teams_w = Teams.copy()
     Teams_l = Teams.copy()
 
-    Teams_w.columns = ['WTeamID', 'Teams_FirstD1Season_W', 'Teams_LastD1Season_W','Teams_diff_D1Season_W']
-    Teams_l.columns = ['LTeamID', 'Teams_FirstD1Season_L', 'Teams_LastD1Season_L','Teams_diff_D1Season_L']
+    Teams_w.columns = ['WTeamID', 'WTeams_FirstD1Season', 'WTeams_LastD1Season','WTeams_diff_D1Season']
+    Teams_l.columns = ['LTeamID', 'LTeams_FirstD1Season', 'LTeams_LastD1Season','LTeams_diff_D1Season']
 
     df = df.merge(Teams_w,on='WTeamID',how='left')
     df = df.merge(Teams_l,on='LTeamID',how='left')
@@ -54,16 +51,11 @@ def main():
     TourneySeeds_w = TourneySeeds.copy() 
     TourneySeeds_l = TourneySeeds.copy()
     
-    TourneySeeds_w.columns = ['Season', 'WTeamID', 'region_W', 'seed_in_region_W', 'seed_in_region2_W']
-    TourneySeeds_l.columns = ['Season', 'LTeamID', 'region_L', 'seed_in_region_L', 'seed_in_region2_L']
+    TourneySeeds_w.columns = ['Season', 'WTeamID', 'Wregion', 'Wseed_in_region', 'Wseed_in_region2']
+    TourneySeeds_l.columns = ['Season', 'LTeamID', 'Lregion', 'Lseed_in_region', 'Lseed_in_region2']
 
     df = df.merge(TourneySeeds_w,on=['Season', 'WTeamID'],how='left')
     df = df.merge(TourneySeeds_l,on=['Season', 'LTeamID'],how='left')
-
-    # merge game cities
-#    GameCities = GameCities.merge(Cities,on='CityID',how='left').drop('CityID',axis=1)
-
-#    df = df.merge(GameCities,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
 
     # merge massey ordinals
     MasseyOrdinals_w = MasseyOrdinals.copy()
@@ -79,8 +71,8 @@ def main():
     TeamCoaches_w = TeamCoaches.copy()
     TeamCoaches_l = TeamCoaches.copy()
 
-    TeamCoaches_w.columns = ['Season', 'WTeamID', 'days_coaches_W']
-    TeamCoaches_l.columns = ['Season', 'LTeamID', 'days_coaches_L']
+    TeamCoaches_w.columns = ['Season', 'WTeamID', 'Wdays_coaches']
+    TeamCoaches_l.columns = ['Season', 'LTeamID', 'Ldays_coaches']
 
     df = df.merge(TeamCoaches_w,on=['Season','WTeamID'],how='left')
     df = df.merge(TeamCoaches_l,on=['Season','LTeamID'],how='left')
@@ -89,27 +81,40 @@ def main():
     Conferences_w = Conferences.copy()
     Conferences_l = Conferences.copy()
 
-    Conferences_w.columns = ['Season', 'WTeamID', 'ConfAbbrev_W']
-    Conferences_l.columns = ['Season', 'LTeamID', 'ConfAbbrev_L']
+    Conferences_w.columns = ['Season', 'WTeamID', 'WConfAbbrev']
+    Conferences_l.columns = ['Season', 'LTeamID', 'LConfAbbrev']
 
     df = df.merge(Conferences_w,on=['Season','WTeamID'],how='left')
     df = df.merge(Conferences_l,on=['Season','LTeamID'],how='left')
 
-    # merge conferences tourney games
-#    df = df.merge(ConferenceTourneyGames,on=['Season','DayNum','WTeamID','LTeamID'],how='left')
-
     # add diff features
-    df['diff_ConfAbbrev'] = df['ConfAbbrev_W']-df['ConfAbbrev_L']
-    df['diff_days_coaches'] = df['days_coaches_W']-df['days_coaches_L']
+    df['diff_ConfAbbrev'] = df['WConfAbbrev']-df['LConfAbbrev']
+    df['diff_days_coaches'] = df['Wdays_coaches']-df['Ldays_coaches']
+    df['diff_Score_mean'] = df['WScore_mean']-df['LScore_mean']
+    df['diff_Score_sum'] = df['WScore_sum']-df['LScore_sum']
+    df['diff_Score_max'] = df['WScore_max']-df['LScore_max']
+    df['diff_Score_min'] = df['WScore_min']-df['LScore_min']
+    df['diff_ScoreGap_sum'] = df['WScoreGap_sum']-df['LScoreGap_sum']
+    df['diff_ScoreGap_mean'] = df['WScoreGap_mean']-df['LScoreGap_mean']
+    df['diff_ScoreGap_max'] = df['WScoreGap_max']-df['LScoreGap_max']
+    df['diff_ScoreGap_min'] = df['WScoreGap_min']-df['LScoreGap_min']
+    df['diff_diff_win_lose'] = df['Wdiff_win_lose']-df['Ldiff_win_lose']
+    df['diff_Stl_sum'] = df['WStl_sum']-df['LStl_sum']
+    df['diff_DR_mean'] = df['WDR_mean']-df['LDR_mean']
+    df['diff_TO_mean'] = df['WTO_mean']-df['LTO_mean']
+    df['diff_OR_std'] = df['WOR_std']-df['LOR_std']
+    df['diff_FGM3_std'] = df['WFGM3_std']-df['LFGM3_std']
+    df['diff_PF_mean'] = df['WPF_mean']-df['LPF_mean']
+    df['diff_DayNum_mean'] = df['WDayNum_mean']-df['LDayNum_mean']
     df['diff_OrdinalRank_mean'] = df['WOrdinalRank_mean']-df['LOrdinalRank_mean']
     df['diff_OrdinalRank_max'] = df['WOrdinalRank_max']-df['LOrdinalRank_max']
     df['diff_OrdinalRank_min'] = df['WOrdinalRank_min']-df['LOrdinalRank_min']
-    df['diff_region'] = df['region_W']-df['region_L']
-    df['diff_seed_in_region'] = df['seed_in_region_W']-df['seed_in_region_L']
-    df['diff_seed_in_region2'] = df['seed_in_region2_W']-df['seed_in_region2_L']
-    df['diff_Teams_FirstD1Season'] = df['Teams_FirstD1Season_W']-df['Teams_FirstD1Season_L']
-    df['diff_Teams_LastD1Season'] = df['Teams_LastD1Season_W']-df['Teams_LastD1Season_L']
-    df['diff_Teams_diff_D1Season'] = df['Teams_diff_D1Season_W']-df['Teams_diff_D1Season_L']
+    df['diff_region'] = df['Wregion']-df['Lregion']
+    df['diff_seed_in_region'] = df['Wseed_in_region']-df['Lseed_in_region']
+    df['diff_seed_in_region2'] = df['Wseed_in_region2']-df['Lseed_in_region2']
+    df['diff_Teams_FirstD1Season'] = df['WTeams_FirstD1Season']-df['LTeams_FirstD1Season']
+    df['diff_Teams_LastD1Season'] = df['WTeams_LastD1Season']-df['LTeams_LastD1Season']
+    df['diff_Teams_diff_D1Season'] = df['WTeams_diff_D1Season']-df['LTeams_diff_D1Season']
 
     # save as feather
     to_feature(df, '../feats/f101')
