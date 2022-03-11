@@ -34,6 +34,19 @@ def main():
     df = df.merge(df_season_w,on=['Season','WTeamID'],how='left')
     df = df.merge(df_season_l,on=['Season','LTeamID'],how='left')
 
+    # merge shifted season result
+    df_season_shift_w = df_season.copy()
+    df_season_shift_l = df_season.copy()
+
+    df_season_shift_w['Season'] += 1
+    df_season_shift_l['Season'] += 1
+
+    df_season_shift_w.columns = ['Season','WTeamID']+[f'W_Shift_{c}' for c in df_season.columns if c not in ['Season','TeamID']]
+    df_season_shift_l.columns = ['Season','LTeamID']+[f'L_Shift_{c}' for c in df_season.columns if c not in ['Season','TeamID']]
+
+    df = df.merge(df_season_shift_w,on=['Season','WTeamID'],how='left')
+    df = df.merge(df_season_shift_l,on=['Season','LTeamID'],how='left')
+
     # merge teams
     Teams_w = Teams.copy()
     Teams_l = Teams.copy()
