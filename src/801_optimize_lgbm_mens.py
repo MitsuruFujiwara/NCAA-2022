@@ -46,11 +46,11 @@ def objective(trial):
                                   )
 
     # ref: https://alphaimpact.jp/downloads/pydata20190927.pdf
-    params = {'objective': 'regression',
-              'metric': 'rmse',
+    params = {'objective': 'binary',
+              'metric': 'binary_logloss',
               'verbosity': -1,
-              "learning_rate": 0.05,
-              'max_depth': 8,
+              "learning_rate": 0.01,
+              'max_depth': 7,
 #              'device': 'gpu',
               'boosting_type': 'gbdt',
               'num_leaves': trial.suggest_int('num_leaves', 2, 100),
@@ -65,12 +65,12 @@ def objective(trial):
               }
 
     # folds
-    folds = GroupKFold(n_splits=5)
+    folds = GroupKFold(n_splits=6)
 
     # cv
     eval_dict = lightgbm.cv(params=params,
                             train_set=lgbm_train,
-                            metrics=['rmse'],
+                            metrics=['binary_logloss'],
                             nfold=5,
                             folds=folds.split(TRAIN_DF[FEATS],groups=TRAIN_DF['Season']),
                             num_boost_round=10000,
@@ -81,7 +81,7 @@ def objective(trial):
 
     gc.collect()
 
-    return min(eval_dict['rmse-mean'])
+    return min(eval_dict['binary_logloss-mean'])
 
 if __name__ == '__main__':
     study = optuna.create_study()
