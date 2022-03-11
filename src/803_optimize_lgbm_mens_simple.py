@@ -22,10 +22,10 @@ from utils import FEATS_EXCLUDED, line_notify, to_json
 warnings.filterwarnings('ignore')
 
 # load datasets
-CONFIGS = json.load(open('../configs/202_lgbm_womens.json'))
+CONFIGS = json.load(open('../configs/203_lgbm_mens_simple.json'))
 
 # load feathers
-FILES = sorted(glob('../feats/f102_*.feather'))
+FILES = sorted(glob('../feats/f103_*.feather'))
 DF = pd.concat([pd.read_feather(f) for f in tqdm(FILES)], axis=1)
 
 # split train & test
@@ -100,10 +100,10 @@ if __name__ == '__main__':
 
     # save result
     hist_df = study.trials_dataframe()
-    hist_df.to_csv("../output/optuna_result_lgbm_womens.csv")
+    hist_df.to_csv("../output/optuna_result_lgbm_mens_simple.csv")
 
     # save json
     CONFIGS['params'] = trial.params
-    to_json(CONFIGS, '../configs/202_lgbm_womens.json')
+    to_json(CONFIGS, '../configs/203_lgbm_mens_simple.json')
 
     line_notify('{} finished. Value: {}'.format(sys.argv[0],trial.value))

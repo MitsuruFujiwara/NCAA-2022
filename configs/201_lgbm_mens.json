@@ -500,12 +500,13 @@
         "diff_Teams_diff_D1Season"
     ],
     "params": {
-        "num_leaves": 95,
-        "subsample": 0.9853151807848384,
+        "max_depth": 5,
+        "num_leaves": 91,
+        "subsample": 0.9148391296011076,
         "subsample_freq": 11,
-        "colsample_bytree": 0.8348492972087826,
-        "min_child_samples": 32,
-        "min_child_weight": 0.21443508699202693,
-        "reg_lambda": 882.3605610558918
+        "colsample_bytree": 0.0751384981872349,
+        "min_child_samples": 39,
+        "min_child_weight": 0.13869085318224264,
+        "reg_lambda": 0.23210151878843618
     }
 }

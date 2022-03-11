@@ -85,6 +85,34 @@ def main():
     # add features ref: https://github.com/kazukim10/kaggle_MarchMania2021
     df['diff_win_lose'] = df['NumWin'] - df['NumLose']
     df['WinRatio'] = df['NumWin'] / (df['NumWin']+df['NumLose'])
+    
+    # FGM/FGA
+    df['FGRatio'] = df['FGM_mean'] / df['FGA_mean']
+
+    # FGM3/FGA3
+    df['FG3Ratio'] = df['FGM3_mean'] / df['FGA3_mean']
+
+    # FTM/FTA
+    df['FTRatio'] = df['FTM_mean'] / df['FTA_mean']
+
+    # EV(expect value)
+    df['EV'] = df['FGM_mean']*df['FGRatio']+df['FGM3_mean']*df['FG3Ratio']+df['FTM_mean']*df['FTRatio']
+
+    # TR
+    df['TR'] = df['OR_mean']+df['DR_mean']
+
+    # TS%
+    df['TS%'] = df['Score_mean']/(2*(df['FGA_mean'] +0.44*df['FTA_mean']))
+
+    # Four-Factor
+    df['eFG'] = (df['FGM_mean'] +0.5*df['FGM3_mean'])/df['FGA_mean']
+    df['OR%'] = df['OR_mean']/df['FGA_mean']
+    df['TO%'] = df['TO_mean']/(df['FGA_mean'] +0.44*df['FTA_mean'] +df['TO_mean'])
+    df['FTR'] = df['FTA_mean']/df['FGA_mean']
+
+    # PPP/POSS
+    df['POSS'] = df['FGA_mean'] +0.44*df['FTA_mean'] +df['TO_mean']
+    df['PPP'] = df['Score_mean']/df['POSS']
 
     # save pkl
     save2pkl('../feats/season_result_womens.pkl', df)

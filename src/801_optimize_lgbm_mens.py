@@ -50,7 +50,7 @@ def objective(trial):
               'metric': 'binary_logloss',
               'verbosity': -1,
               "learning_rate": 0.01,
-              'max_depth': 3,
+              'max_depth': 5,
 #              'device': 'gpu',
               'boosting_type': 'gbdt',
               'num_leaves': trial.suggest_int('num_leaves', 2, 100),
