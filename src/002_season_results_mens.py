@@ -82,6 +82,9 @@ def main():
     # merge
     df = df.merge(df_stat,on=['Season','TeamID'],how='outer')
 
+    # add win-lose diff
+    df['diff_win_lose'] = df['NumWin'] - df['NumLose']
+
     # save pkl
     save2pkl('../feats/season_result_mens.pkl', df)
 
