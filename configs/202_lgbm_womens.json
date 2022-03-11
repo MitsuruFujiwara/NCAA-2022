@@ -465,12 +465,13 @@
         "diff_seed_in_region2"
     ],
     "params": {
-        "num_leaves": 95,
-        "subsample": 0.9853151807848384,
-        "subsample_freq": 11,
-        "colsample_bytree": 0.8348492972087826,
-        "min_child_samples": 32,
-        "min_child_weight": 0.21443508699202693,
-        "reg_lambda": 882.3605610558918
+        "max_depth": 8,
+        "num_leaves": 2,
+        "subsample": 0.9514056358358675,
+        "subsample_freq": 9,
+        "colsample_bytree": 0.5226493087208887,
+        "min_child_samples": 43,
+        "min_child_weight": 3.0203558725899047,
+        "reg_lambda": 0.10182613267261348
     }
 }

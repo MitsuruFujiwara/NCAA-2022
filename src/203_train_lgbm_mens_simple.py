@@ -41,7 +41,6 @@ params['boosting'] = 'gbdt'
 params['objective'] = 'binary'
 params['metric'] = 'binary_logloss'
 params['learning_rate'] = 0.01
-params['max_depth'] = 3
 params['reg_alpha'] = 0.0
 params['min_split_gain'] = 0.0
 params['verbose'] = -1
