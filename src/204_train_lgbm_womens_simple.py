@@ -16,24 +16,22 @@ from utils import line_notify, save_imp
 from utils import NUM_FOLDS, FEATS_EXCLUDED
 
 #==============================================================================
-# Train LightGBM (mens)
+# Train LightGBM (womens simple)
 #==============================================================================
 
 warnings.filterwarnings('ignore')
 
-configs = json.load(open('../configs/201_lgbm_mens.json'))
+configs = json.load(open('../configs/204_lgbm_womens_simple.json'))
 
-feats_path = '../feats/f101_*.feather'
+feats_path = '../feats/f104_*.feather'
 
-sub_path = '../output/submission_lgbm_mens.csv'
-oof_path = '../output/oof_lgbm_mens.csv'
+sub_path = '../output/submission_lgbm_womens_simple.csv'
+oof_path = '../output/oof_lgbm_womens_simple.csv'
 
-model_path = '../models/lgbm_mens_'
+model_path = '../models/lgbm_womens_simple_'
 
-imp_path_png = '../imp/lgbm_importances_mens.png'
-imp_path_csv = '../imp/feature_importance_lgbm_mens.csv'
-
-scatter_path = '../imp/scatter_mens.png'
+imp_path_png = '../imp/lgbm_importances_womens_simple.png'
+imp_path_csv = '../imp/feature_importance_lgbm_womens_simple.csv'
 
 params = configs['params']
 
@@ -43,6 +41,7 @@ params['boosting'] = 'gbdt'
 params['objective'] = 'binary'
 params['metric'] = 'binary_logloss'
 params['learning_rate'] = 0.01
+params['max_depth'] = 5
 params['reg_alpha'] = 0.0
 params['min_split_gain'] = 0.0
 params['verbose'] = -1
