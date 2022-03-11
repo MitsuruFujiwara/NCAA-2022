@@ -9,9 +9,10 @@ import warnings
 
 from glob import glob
 from sklearn.model_selection import GroupKFold
+from sklearn.metrics import log_loss
 from tqdm import tqdm
 
-from utils import line_notify, rmse, save_imp, plot_scatter
+from utils import line_notify, save_imp, plot_scatter
 from utils import NUM_FOLDS, FEATS_EXCLUDED
 
 #==============================================================================
@@ -114,11 +115,11 @@ def main():
         # save importances
         fold_importance_df = pd.DataFrame()
         fold_importance_df['feature'] = feats
-        fold_importance_df['importance'] = reg.feature_importance(importance_type='gain', iteration=reg.best_iteration)
+        fold_importance_df['importance'] = np.log1p(reg.feature_importance(importance_type='gain', iteration=reg.best_iteration))
         imp_df = pd.concat([imp_df, fold_importance_df], axis=0)
 
         # calc fold score
-        fold_score = rmse(valid_y, oof_preds[valid_idx])
+        fold_score = log_loss(valid_y, oof_preds[valid_idx])
 
         print(f'Fold {n_fold+1} rmse: {fold_score}')
 
@@ -126,8 +127,8 @@ def main():
         gc.collect()
 
     # Full score and LINE Notify
-    full_score = round(rmse(train_df['target'], oof_preds),6)
-    line_notify(f'Full rmse: {full_score}')
+    full_score = round(log_loss(train_df['target'], oof_preds),6)
+    line_notify(f'Full logloss: {full_score}')
 
     # save importance
     save_imp(imp_df,imp_path_png,imp_path_csv)
