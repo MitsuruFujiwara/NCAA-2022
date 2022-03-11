@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
-from utils import BASE_DIR, DICT_LOC
+from utils import MBASE_DIR, DICT_LOC
 
 #==============================================================================
 # preprocess season results mens
@@ -13,7 +13,7 @@ from utils import BASE_DIR, DICT_LOC
 def main():
 
     # load csv
-    RegularSeasonDetailedResults = pd.read_csv(f'{BASE_DIR}/MRegularSeasonDetailedResults.csv')
+    RegularSeasonDetailedResults = pd.read_csv(f'{MBASE_DIR}/MRegularSeasonDetailedResults.csv')
 
     # add score gap
     RegularSeasonDetailedResults['WScoreGap'] = RegularSeasonDetailedResults['WScore']-RegularSeasonDetailedResults['LScore']

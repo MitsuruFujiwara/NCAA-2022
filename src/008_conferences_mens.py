@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 
 from utils import save2pkl, line_notify
-from utils import BASE_DIR
+from utils import MBASE_DIR
 
 #==============================================================================
 # preprocess conferences mens
@@ -13,7 +13,7 @@ from utils import BASE_DIR
 def main():
 
     # load csv
-    Conferences = pd.read_csv(f'{BASE_DIR}/MTeamConferences.csv')
+    Conferences = pd.read_csv(f'{MBASE_DIR}/MTeamConferences.csv')
 
     # label encoding
     Conferences['ConfAbbrev'] = Conferences['ConfAbbrev'].map(Conferences['ConfAbbrev'].value_counts())
