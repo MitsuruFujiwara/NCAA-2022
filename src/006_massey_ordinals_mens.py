@@ -13,7 +13,7 @@ from utils import MBASE_DIR
 def main():
 
     # load csv
-    MasseyOrdinals = pd.read_csv(f'{MBASE_DIR}/MMasseyOrdinals.csv')
+    MasseyOrdinals = pd.read_csv(f'{MBASE_DIR}/MMasseyOrdinals_thruDay128.csv')
 
     # drop syetem name
     MasseyOrdinals.drop(['SystemName'],axis=1,inplace=True)

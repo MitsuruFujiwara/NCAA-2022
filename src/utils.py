@@ -25,7 +25,7 @@ COMPETITION_NAME_M = 'mens-march-mania-2022'
 COMPETITION_NAME_W = 'womens-march-mania-2022'
 
 # base directory
-MBASE_DIR = '../input/mens/MDataFiles_Stage1'
+MBASE_DIR = '../input/mens/MDataFiles_Stage2'
 WBASE_DIR = '../input/womens/WDataFiles_Stage1'
 
 # dict for location
