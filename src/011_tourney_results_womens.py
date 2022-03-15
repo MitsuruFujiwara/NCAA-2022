@@ -14,7 +14,7 @@ def main():
 
     # load csv
     TourneyCompactResults = pd.read_csv(f'{WBASE_DIR}/WNCAATourneyCompactResults.csv')
-    SampleSubmission = pd.read_csv(f'{WBASE_DIR}/WSampleSubmissionStage1.csv')
+    SampleSubmission = pd.read_csv(f'{WBASE_DIR}/WSampleSubmissionStage2.csv')
 
     # split win & lose
     df_w = TourneyCompactResults.copy()
