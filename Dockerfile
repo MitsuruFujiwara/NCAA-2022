@@ -53,23 +53,6 @@ RUN git clone --recursive --branch stable --depth 1 https://github.com/Microsoft
     rm -rf /usr/local/src/*
 
 #==============================================================================
-# Google Chrome
-#==============================================================================
-
-RUN curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/google-chrome-stable_current_amd64.deb && \
-    dpkg -i /tmp/google-chrome-stable_current_amd64.deb || \
-    (apt -f install -y && dpkg -i /tmp/google-chrome-stable_current_amd64.deb) && \
-    rm -f /tmp/google-chrome-stable_current_amd64.deb
-
-RUN pip install chromedriver-binary-auto
-
-#==============================================================================
-# SQL
-#==============================================================================
-
-RUN pip install PyMySQL SQLAlchemy
-
-#==============================================================================
 # Other Libraries
 #==============================================================================
 
